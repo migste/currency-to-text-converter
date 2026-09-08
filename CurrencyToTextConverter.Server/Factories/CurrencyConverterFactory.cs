@@ -12,6 +12,7 @@ namespace CurrencyToTextConverter.Server.Factories
                 return lang switch
                 {
                     "en" => new EnglishCurrencyConverter(),
+                    "de" => new GermanCurrencyConverter(),
                     _ => null,
                 };
             }

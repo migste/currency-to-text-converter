@@ -31,8 +31,18 @@ namespace CurrencyToTextConverter.Server.Controllers
 
             try
             {
-                var integer = long.TryParse(amount?.Split(",")[0], out long parsedInteger) ? parsedInteger : 0;
-                var fraction = int.TryParse(amount?.Split(",")[1], out int parsedFraction) ? parsedFraction : 0;
+                long integer = 0;
+                int fraction = 0;
+
+                var splittedAmount = amount != null ? amount.Split(',') : System.Array.Empty<string>();
+
+                if (splittedAmount.Length > 0)
+                {
+                    integer = long.TryParse(splittedAmount[0], out var parsedInteger) ? parsedInteger : 0;
+
+                    if (splittedAmount.Length > 1)
+                        fraction = int.TryParse(splittedAmount[1], out var parsedFraction) ? parsedFraction : 0;
+                }
 
                 var text = converter.Convert(integer, fraction);
                 return Ok(new { text });
