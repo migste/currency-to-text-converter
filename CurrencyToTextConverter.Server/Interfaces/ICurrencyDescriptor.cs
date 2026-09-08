@@ -2,10 +2,9 @@
 {
     internal interface ICurrencyDescriptor
     {
-        public string IntegerSingular { get; }
-        public string IntegerPlural { get; }
-        public string FractionSingular { get; }
-        public string FractionPlural { get; }
-
+        public string GetIntegerSingular(string lang);
+        public string GetIntegerPlural(string lang);
+        public string GetFractionSingular(string lang);
+        public string GetFractionPlural(string lang);
     }
 }

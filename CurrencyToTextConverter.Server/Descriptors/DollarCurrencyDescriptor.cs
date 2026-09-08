@@ -4,11 +4,49 @@ namespace CurrencyToTextConverter.Server.Descriptors
 {
     internal class DollarCurrencyDescriptor : ICurrencyDescriptor
     {
-        public string IntegerSingular => "dollar";
-        public string IntegerPlural => "dollars";
-        public string FractionSingular => "cent";
-        public string FractionPlural => "cents";
 
-       
+        public string GetIntegerSingular(string lang) { 
+            switch (lang.ToLowerInvariant())
+            {
+                case "de":
+                    return "Dollar";
+                default:
+                    return "dollar";
+            }
+        }
+
+        public string GetIntegerPlural(string lang)
+        {
+            switch (lang.ToLowerInvariant())
+            {
+                case "de":
+                    return "Dollar";
+                default:
+                    return "dollars";
+            }
+        }
+
+        public string GetFractionSingular(string lang)
+        {
+            switch (lang.ToLowerInvariant())
+            {
+                case "de":
+                    return "Cent";
+                default:
+                    return "cent";
+            }
+        }
+
+        public string GetFractionPlural(string lang)
+        {
+            switch (lang.ToLowerInvariant())
+            {
+                case "de":
+                    return "Cent";
+                default:
+                    return "cents";
+            }
+        }
+
     }
 }

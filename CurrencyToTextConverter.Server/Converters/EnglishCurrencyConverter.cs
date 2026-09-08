@@ -8,6 +8,7 @@ namespace CurrencyToTextConverter.Server.Services
     {
         private static readonly string[] words_0_19 = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         private static readonly string[] words_20_99 = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+        private string _lang = "en";
 
         public string Convert(long integer, int fraction) { 
             return Convert(integer, fraction, new DollarCurrencyDescriptor());
@@ -17,15 +18,15 @@ namespace CurrencyToTextConverter.Server.Services
         {
             var sb = new StringBuilder();
             sb.Append(NumberToWords(integer));
-            sb.Append(integer == 1 ? " " + currencyDescriptor.IntegerSingular : " " + currencyDescriptor.IntegerPlural);
+            sb.Append(integer == 1 ? " " + currencyDescriptor.GetIntegerSingular(_lang) : " " + currencyDescriptor.GetIntegerPlural(_lang));
 
             if (fraction > 0)
             {
                 sb.Append(" and ");
                 if (fraction == 1)
-                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.FractionSingular);
+                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.GetFractionSingular(_lang));
                 else
-                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.FractionPlural);
+                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.GetFractionPlural(_lang));
             }
 
             return sb.ToString();
@@ -43,7 +44,7 @@ namespace CurrencyToTextConverter.Server.Services
             {
                 var ten = number / 10;
                 var rest = number % 10;
-                return words_20_99[ten] + "-" + EnglishCurrencyConverter.words_0_19[rest];
+                return words_20_99[ten] + (rest > 0 ? "-" + words_0_19[rest] : "");
             }
             if (number < 1000)
             {
