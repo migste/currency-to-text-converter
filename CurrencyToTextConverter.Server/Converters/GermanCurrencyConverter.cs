@@ -22,8 +22,11 @@ namespace CurrencyToTextConverter.Server.Services
             if (fraction > 0)
             {
                 sb.Append(" und ");
-                sb.Append(NumberToWords(fraction));
-                sb.Append(fraction == 1 ? " " + currencyDescriptor.FractionSingular : " " + currencyDescriptor.FractionPlural);
+                if (fraction == 1)
+                    // Correction for German: "ein" for 1, otherwise "X"
+                    sb.Append("ein " + currencyDescriptor.FractionSingular);
+                else
+                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.FractionPlural);
             }
 
             return sb.ToString();

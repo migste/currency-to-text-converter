@@ -19,6 +19,7 @@ namespace CurrencyToTextConverter.GUI
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModels.MainViewModel();
         }
     }
 }

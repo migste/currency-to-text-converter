@@ -22,8 +22,10 @@ namespace CurrencyToTextConverter.Server.Services
             if (fraction > 0)
             {
                 sb.Append(" and ");
-                sb.Append(NumberToWords(fraction));
-                sb.Append(fraction == 1 ? " " + currencyDescriptor.FractionSingular : " " + currencyDescriptor.FractionPlural);
+                if (fraction == 1)
+                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.FractionSingular);
+                else
+                    sb.Append(NumberToWords(fraction) + " " + currencyDescriptor.FractionPlural);
             }
 
             return sb.ToString();

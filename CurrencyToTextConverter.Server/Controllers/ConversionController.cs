@@ -31,18 +31,21 @@ namespace CurrencyToTextConverter.Server.Controllers
 
             try
             {
-                long integer = 0;
-                int fraction = 0;
+                if (string.IsNullOrWhiteSpace(amount))
+                    return BadRequest("Missing amount");
 
-                var splittedAmount = amount != null ? amount.Split(',') : System.Array.Empty<string>();
+                var normalized = amount.Trim().Replace(',', '.');
 
-                if (splittedAmount.Length > 0)
-                {
-                    integer = long.TryParse(splittedAmount[0], out var parsedInteger) ? parsedInteger : 0;
+                if (!decimal.TryParse(normalized, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var value))
+                    return BadRequest("Invalid amount");
 
-                    if (splittedAmount.Length > 1)
-                        fraction = int.TryParse(splittedAmount[1], out var parsedFraction) ? parsedFraction : 0;
-                }
+                if (value < 0)
+                    return BadRequest("Amount must be non-negative");
+
+                var integer = (long)decimal.Truncate(value);
+                // convert fractional part to integer cents (rounded to 2 decimals)
+                var fracDecimal = decimal.Round((value - integer) * 100);
+                var fraction = (int)fracDecimal; // e.g. 0.01 -> 1, 0.1 -> 10
 
                 var text = converter.Convert(integer, fraction);
                 return Ok(new { text });

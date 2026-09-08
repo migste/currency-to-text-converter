@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CurrencyToTextConverter.GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Currency to Text Converter" Height="450" Width="800">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Text="Amount" Grid.Column="0" />
+        <TextBox Grid.Row="1" Grid.Column="0" x:Name="AmountTextBox" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Margin="0,6,12,6" />
+        <TextBlock Text="Language" Grid.Column ="1" />
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValuePath="Tag" SelectedValue="{Binding SelectedLanguage}" Margin="0,6,0,6">
+            <ComboBoxItem Tag="en">English</ComboBoxItem>
+            <ComboBoxItem Tag="de">Deutsch</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="Red" Text="{Binding ErrorMessage}" />
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Vertical">
+            <Button Content="Convert" Width="120" HorizontalAlignment="Left" Command="{Binding ConvertCommand}" />
+            <TextBox Margin="0,12,0,0" Text="{Binding Result}" AcceptsReturn="True" Height="200" IsReadOnly="True" TextWrapping="Wrap" />
+        </StackPanel>
     </Grid>
 </Window>
