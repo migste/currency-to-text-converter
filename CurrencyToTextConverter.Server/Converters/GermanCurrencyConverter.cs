@@ -1,11 +1,10 @@
 ﻿using CurrencyToTextConverter.Server.Descriptors;
 using CurrencyToTextConverter.Server.Interfaces;
-using Microsoft.Extensions.Primitives;
 using System.Text;
 
-namespace CurrencyToTextConverter.Server.Services
+namespace CurrencyToTextConverter.Server.Converters
 {
-    internal class GermanCurrencyConverter : ICurrencyConverter
+    public class GermanCurrencyConverter : ICurrencyConverter
     {
         private static readonly string[] words_0_19 = { "null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn" };
         private static readonly string[] words_20_99 = { "", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig" };

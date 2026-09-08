@@ -2,7 +2,7 @@
 
 namespace CurrencyToTextConverter.Server.Descriptors
 {
-    internal class DollarCurrencyDescriptor : ICurrencyDescriptor
+    public class DollarCurrencyDescriptor : ICurrencyDescriptor
     {
 
         public string GetIntegerSingular(string lang) { 

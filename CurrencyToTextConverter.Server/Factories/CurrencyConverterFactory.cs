@@ -1,5 +1,5 @@
 ﻿using CurrencyToTextConverter.Server.Interfaces;
-using CurrencyToTextConverter.Server.Services;
+using CurrencyToTextConverter.Server.Converters;
 
 namespace CurrencyToTextConverter.Server.Factories
 {

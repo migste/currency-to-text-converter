@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="CurrencyToTextConverter.GUI/CurrencyToTextConverter.GUI.csproj" Id="0009e8c3-97d3-4b7e-8d28-d0cfec7f5d84" />
   <Project Path="CurrencyToTextConverter.Server/CurrencyToTextConverter.Server.csproj" Id="85a04911-dd1d-417f-955b-144cf60504e6" />
+  <Project Path="CurrencyToTextConverter.Tests/CurrencyToTextConverter.Tests.csproj" />
 </Solution>

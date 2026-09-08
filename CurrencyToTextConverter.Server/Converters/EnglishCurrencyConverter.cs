@@ -2,9 +2,9 @@
 using CurrencyToTextConverter.Server.Interfaces;
 using System.Text;
 
-namespace CurrencyToTextConverter.Server.Services
+namespace CurrencyToTextConverter.Server.Converters
 {
-    internal class EnglishCurrencyConverter : ICurrencyConverter
+    public class EnglishCurrencyConverter : ICurrencyConverter
     {
         private static readonly string[] words_0_19 = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         private static readonly string[] words_20_99 = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };

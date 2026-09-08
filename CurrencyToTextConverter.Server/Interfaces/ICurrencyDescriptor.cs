@@ -1,6 +1,6 @@
 ﻿namespace CurrencyToTextConverter.Server.Interfaces
 {
-    internal interface ICurrencyDescriptor
+    public interface ICurrencyDescriptor
     {
         public string GetIntegerSingular(string lang);
         public string GetIntegerPlural(string lang);
