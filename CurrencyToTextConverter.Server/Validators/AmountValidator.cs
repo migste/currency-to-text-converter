@@ -34,7 +34,6 @@ namespace CurrencyToTextConverter.Server.Validators
             if (parsedInteger < 0 || parsedInteger > 999_999_999)
                 return new AmountValidationResult { IsValid = false, ErrorMessage = "Integer part must be between 0 and 999,999,999" };
 
-            var parsedFraction = 0;
             if (parts.Length == 2)
             {
                 var frac = parts[1];
@@ -47,18 +46,14 @@ namespace CurrencyToTextConverter.Server.Validators
                 if (frac.Length == 1)
                     frac = frac + "0"; // 1 => 10
 
-                if (!int.TryParse(frac, out parsedFraction))
+                if (!int.TryParse(frac, out var parsedFraction))
                     return new AmountValidationResult { IsValid = false, ErrorMessage = "Invalid fraction part" };
 
                 if (parsedFraction < 0 || parsedFraction > 99)
                     return new AmountValidationResult { IsValid = false, ErrorMessage = "Fraction part must be between 0 and 99" };
             }
 
-            return new AmountValidationResult { 
-                IsValid = true, 
-                Integer = parsedInteger, 
-                Fraction = parsedFraction 
-            };
+            return new AmountValidationResult { IsValid = true };
         }
     }
 }

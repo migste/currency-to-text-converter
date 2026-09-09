@@ -37,8 +37,9 @@ namespace CurrencyToTextConverter.Server.Controllers
                 if (!result.IsValid)
                     return BadRequest(result.ErrorMessage ?? "Invalid amount");
 
-                var integer = result.Integer;
-                var fraction = result.Fraction;
+                var parser = new AmountParser();
+                if (!parser.TryParse(amount, out var integer, out var fraction))
+                    return BadRequest("Unable to parse amount");
 
                 var text = converter.Convert(integer, fraction);
                 return Ok(new { text });

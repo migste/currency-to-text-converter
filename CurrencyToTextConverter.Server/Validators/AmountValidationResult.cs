@@ -8,7 +8,5 @@ namespace CurrencyToTextConverter.Server.Validators
     {
         public bool IsValid { get; init; }
         public string? ErrorMessage { get; init; }
-        public long Integer { get; init; }
-        public int Fraction { get; init; }
     }
 }
