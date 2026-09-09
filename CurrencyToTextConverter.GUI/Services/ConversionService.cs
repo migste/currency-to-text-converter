@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.IO;
 
 namespace CurrencyToTextConverter.GUI.Services
 {
@@ -7,9 +8,31 @@ namespace CurrencyToTextConverter.GUI.Services
     {
         private readonly string _baseUrl;
 
-        public ConversionService(string baseUrl = "http://localhost:32500")
+        public ConversionService(string? baseUrl = null)
         {
-            _baseUrl = baseUrl ?? string.Empty;
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                _baseUrl = baseUrl;
+                return;
+            }
+
+            var port = 32500;
+
+            try
+            {
+                var json = File.ReadAllText("appsettings.json");
+                using var doc = JsonDocument.Parse(json);
+                if (doc.RootElement.TryGetProperty("Port", out var value))
+                {
+                    value.TryGetInt32(out port);
+                }
+            }
+            catch
+            {
+                // ignore errors and use default port
+            }
+
+            _baseUrl = $"http://localhost:{port}";
         }
 
         public async Task<(bool Success, string? Text, string? ErrorMessage)> ConvertAsync(string amount, string lang)
