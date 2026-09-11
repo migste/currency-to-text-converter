@@ -3,7 +3,7 @@ using CurrencyToTextConverter.Server.Descriptors;
 
 namespace CurrencyToTextConverter.Server.Factories
 {
-    internal class CurrencyDescriptorFactory
+    public class CurrencyDescriptorFactory
     {
 
         public ICurrencyDescriptor? Create(string currency)

@@ -11,10 +11,6 @@ namespace CurrencyToTextConverter.Server.Converters
 
         private string _lang = "de";
 
-        public string Convert(long integer, int fraction) { 
-            return Convert(integer, fraction, new DollarCurrencyDescriptor());
-        }
-
         public string Convert(long integer, int fraction, ICurrencyDescriptor currencyDescriptor)
         {
             var sb = new StringBuilder();

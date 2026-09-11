@@ -9,7 +9,13 @@ namespace CurrencyToTextConverter.Server.Validators
             if (string.IsNullOrWhiteSpace(amount))
                 return new AmountValidationResult { IsValid = false, ErrorMessage = "Missing amount" };
 
-            var trimmedAmount = amount.Trim();
+            // allow spaces as thousand separators in the integer part(e.g. 40 000) and also trim the input
+            var trimmedAmount = amount.Trim().Replace(" ", "");
+
+            // check if it is a number
+            if (!decimal.TryParse(trimmedAmount, out _))
+                return new AmountValidationResult { IsValid = false, ErrorMessage = "Amount must be a number" };
+
 
             // separator must be a comma
             if (trimmedAmount.Contains('.'))
@@ -23,12 +29,8 @@ namespace CurrencyToTextConverter.Server.Validators
             if (string.IsNullOrEmpty(integerPart))
                 return new AmountValidationResult { IsValid = false, ErrorMessage = "Invalid integer part" };
 
-            // allow spaces as thousand separators in the integer part (e.g. 40 000)
-            var integerDigits = integerPart.Replace(" ", string.Empty);
-            if (string.IsNullOrEmpty(integerDigits))
-                return new AmountValidationResult { IsValid = false, ErrorMessage = "Invalid integer part" };
 
-            if (!long.TryParse(integerDigits, out var parsedInteger))
+            if (!long.TryParse(integerPart, out var parsedInteger))
                 return new AmountValidationResult { IsValid = false, ErrorMessage = "Invalid integer part" };
 
             if (parsedInteger < 0 || parsedInteger > 999_999_999)

@@ -1,5 +1,6 @@
-using Xunit;
 using CurrencyToTextConverter.Server.Converters;
+using CurrencyToTextConverter.Server.Factories;
+using Xunit;
 
 namespace CurrencyToTextConverter.Tests
 {
@@ -16,7 +17,8 @@ namespace CurrencyToTextConverter.Tests
         public void ConvertToEnglish_Expected(long integer, int fraction, string expected)
         {
             var converter = new EnglishCurrencyConverter();
-            var text = converter.Convert(integer, fraction);
+            var descriptor = new CurrencyDescriptorFactory().Create("USD");
+            var text = converter.Convert(integer, fraction, descriptor);
             Assert.Equal(expected, text);
         }
     }

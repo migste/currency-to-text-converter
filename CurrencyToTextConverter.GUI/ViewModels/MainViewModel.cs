@@ -38,7 +38,7 @@ namespace CurrencyToTextConverter.GUI.ViewModels
 
             if (string.IsNullOrWhiteSpace(Amount))
             {
-                ErrorMessage = "Please enter an amount.";
+                ErrorMessage = "Please enter an amount";
                 return;
             }
 

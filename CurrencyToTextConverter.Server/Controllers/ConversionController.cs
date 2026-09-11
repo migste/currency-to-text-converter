@@ -8,26 +8,28 @@ namespace CurrencyToTextConverter.Server.Controllers
     [Route("convert")]
     public class ConversionController : ControllerBase
     {
-
         private readonly CurrencyConverterFactory _currencyConverterFactory;
-
         private readonly CurrencyDescriptorFactory _currencyDescriptorFactory;
 
-
-        public ConversionController()
+        public ConversionController(CurrencyConverterFactory currencyConverterFactory, CurrencyDescriptorFactory currencyDescriptorFactory)
         {
-            _currencyConverterFactory = new CurrencyConverterFactory();
-            _currencyDescriptorFactory = new CurrencyDescriptorFactory();
+            _currencyConverterFactory = currencyConverterFactory;
+            _currencyDescriptorFactory = currencyDescriptorFactory;
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] string? amount, [FromQuery] string? lang)
+        public IActionResult Get([FromQuery] string? amount, [FromQuery] string? lang, [FromQuery] string? currency)
         {
             lang ??= "en";
+            currency ??= "USD";
 
             var converter = _currencyConverterFactory.Create(lang);
             if (converter == null)
-                return BadRequest($"Unsupported language: {lang}");
+                return NotFound($"Unsupported language: {lang}");
+
+            var descriptor = _currencyDescriptorFactory.Create(currency);
+            if (descriptor == null)
+                return NotFound($"Unsupported currency: {currency}");
 
 
             try
@@ -39,9 +41,9 @@ namespace CurrencyToTextConverter.Server.Controllers
 
                 var parser = new AmountParser();
                 if (!parser.TryParse(amount, out var integer, out var fraction))
-                    return BadRequest("Unable to parse amount");
+                    return StatusCode(500, "Internal Server Error: Unable to parse amount");
 
-                var text = converter.Convert(integer, fraction);
+                var text = converter.Convert(integer, fraction, descriptor);
                 return Ok(new { text });
             }
             catch (Exception ex)

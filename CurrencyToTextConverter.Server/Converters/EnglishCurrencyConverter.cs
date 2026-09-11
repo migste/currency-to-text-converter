@@ -10,10 +10,6 @@ namespace CurrencyToTextConverter.Server.Converters
         private static readonly string[] words_20_99 = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
         private string _lang = "en";
 
-        public string Convert(long integer, int fraction) { 
-            return Convert(integer, fraction, new DollarCurrencyDescriptor());
-        }
-
         public string Convert(long integer, int fraction, ICurrencyDescriptor currencyDescriptor)
         {
             var sb = new StringBuilder();
